@@ -1,37 +1,41 @@
-import gql from "graphql-tag";
-import * as React from "react";
-import { Query } from "react-apollo";
-class App extends React.Component {
-    public render() {
-        return (
-        <div >
-            <h1>Teams</h1>
-            <Query query={gql`
-                query{
-                    Team{
-                        Name                        
-                    }
-                }
-            `}>
-            {({loading, error, data}) => {
-                if(loading) { return (<p> Loading...</p>)};
-                if(error) { return (<p>Error</p>) };
-                return(
-                    <ul>
-                        {data.Team.map((team, i) => {
-                            return(
-                                <li key={i}>
-                                    {team.Name}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                );
-            }}
-            </Query>
-        </div>
-    );
-  }
+import React from "react";
+import Home from "./Home";
+import FacebookLoginComponent from './FacebookLoginComponent';
+
+interface State{
+    isLoggedIn: boolean;
+    name: string;
+    email: string;
+    picture: string;
+}
+class App extends React.Component<{}, State> {
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoggedIn: false,
+            name: "",
+            email: "",
+            picture: "",
+        }
+    }
+    render() {
+        if(this.state.isLoggedIn){
+            return ( <Home /> );
+        } else {
+            return(
+                <FacebookLoginComponent onResponseFacebook={this.onResponseFacebook} />
+            );
+        }        
+    }
+
+    onResponseFacebook = (response) => {
+        this.setState({
+            isLoggedIn: true,
+            name: response.name,
+            email: response.email,
+            picture: response.picture.data.url,
+        });
+    }
 }
 
 export default App;
