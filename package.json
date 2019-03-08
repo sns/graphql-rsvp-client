@@ -16,7 +16,7 @@
     "ts-node": "^7.0.1"
   },
   "scripts": {
-    "start": "PORT=9876 react-scripts-ts start",
+    "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",

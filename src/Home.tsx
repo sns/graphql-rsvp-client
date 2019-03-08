@@ -9,10 +9,12 @@ class Home extends React.Component {
             <Query query={gql`
                 query{
                     Team{
-                        Name
-                        Players{
-                            Name
-                        }                   
+                        team_key
+                        name
+                        players {
+                            player_key
+                            name
+                        }             
                     }
                 }
             `}>
@@ -24,12 +26,12 @@ class Home extends React.Component {
                         {data.Team.map((team, i) => {
                             return(
                                 <li key={i}>
-                                    {team.Name}
+                                    {team.name}
                                     <ul>
-                                        {team.Players.map((player, index) => {
+                                        {team.players.map((player, index) => {
                                             return(
                                                 <li key={index}>
-                                                    {player.Name}
+                                                    {player.name}
                                                 </li>
                                             );
                                         })}
